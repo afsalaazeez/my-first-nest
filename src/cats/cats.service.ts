@@ -29,4 +29,14 @@ export class CatsService {
 
     return updatedCat;
   }
+
+  async remove(id: string): Promise<{ message: string }> {
+    const deletedCat = await this.catModel.findByIdAndDelete(id);
+
+    if (!deletedCat) {
+      throw new NotFoundException('Cat not found');
+    }
+
+    return { message: 'Cat deleted successfully' };
+  }
 }
