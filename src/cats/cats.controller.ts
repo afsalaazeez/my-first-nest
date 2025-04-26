@@ -5,6 +5,7 @@ import {
   Patch,
   Delete,
   Param,
+  Query,
   Body,
 } from '@nestjs/common';
 import { CatsService } from './cats.service';
@@ -16,8 +17,8 @@ export class CatsController {
   constructor(private readonly catsService: CatsService) {}
 
   @Get()
-  findAll() {
-    return this.catsService.findAll();
+  findAll(@Query('page') page?: number, @Query('limit') limit?: number) {
+    return this.catsService.findAll(Number(page) || 1, Number(limit) || 10);
   }
 
   @Post()

@@ -14,10 +14,10 @@ export class CatsService {
     return createdCat.save();
   }
 
-  async findAll(): Promise<Cat[]> {
-    return this.catModel.find().exec();
+  async findAll(page = 1, limit = 10): Promise<Cat[]> {
+    const skip = (page - 1) * limit;
+    return this.catModel.find().skip(skip).limit(limit).exec();
   }
-
   async update(id: string, updateCatDto: UpdateCatDto): Promise<Cat> {
     const updatedCat = await this.catModel.findByIdAndUpdate(id, updateCatDto, {
       new: true,
